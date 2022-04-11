@@ -1,5 +1,3 @@
-import random
-
 from positional import Positional
 
 
@@ -9,4 +7,4 @@ class Oasis(Positional):
         Positional.__init__(self, world, x, y)
 
     def __repr__(self):
-        return "\033[0;30;47m" + "#" + "\033[0;0m"
+        return "\033[0;32;47m" + "+" + "\033[0;0m"

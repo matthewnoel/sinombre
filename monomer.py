@@ -9,7 +9,7 @@ class Monomer:
         self.value = value
 
     def mutate(self):
-        if self.value == self.range - 1:
-            self.value = 0
-        else:
-            self.value += 1
+        new_value = random.randrange(0, self.range)
+        while self.value == new_value:
+            new_value = random.randrange(0, self.range)
+        self.value = new_value

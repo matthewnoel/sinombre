@@ -1,19 +1,22 @@
 import random
 
+from food import Food
 from oasis import Oasis
 from organism import Organism
 from positional import Positional
 
 
 class World:
-    def __init__(self, size, life_odds=5, oasis_odds=50):
+    def __init__(self, size, life_odds=10, food_odds=20, oasis_odds=50):
         self.size = size
         self.position_relations = {}
         for x in range(size):
             for y in range(size):
-                if random.randrange(1, oasis_odds + 1) % oasis_odds == 0:
+                if random.randrange(0, oasis_odds) == 0:
                     self.createOasis(x, y)
-                elif random.randrange(1, life_odds + 1) % life_odds == 0:
+                elif random.randrange(0, food_odds) == 0:
+                    self.plantFood(x, y)
+                elif random.randrange(0, life_odds) == 0:
                     self.spawnOrganism(x, y)
 
     def __repr__(self):
@@ -34,9 +37,13 @@ class World:
         return (self.size * y) + x
 
     def incrementTime(self):
+        retval = False
         position_relations = self.position_relations.copy()
         for position in position_relations:
-            self.position_relations[position].onTimeIncremented()
+            if type(position_relations[position]).__name__ == "Organism":
+                retval = True
+            position_relations[position].onTimeIncremented()
+        return retval
 
     def spawnOrganism(self, x, y, genome=None):
         organism = None
@@ -48,6 +55,11 @@ class World:
 
     def createOasis(self, x, y):
         self.position_relations[self.calculatePositionRelationIndex(x, y)] = Oasis(
+            self, x, y
+        )
+
+    def plantFood(self, x, y):
+        self.position_relations[self.calculatePositionRelationIndex(x, y)] = Food(
             self, x, y
         )
 
