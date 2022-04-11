@@ -38,6 +38,16 @@ pip install -r requirements.txt
 python main.py
 ```
 
+Arguments
+
+Arg | Description
+---|---
+--seed | Seed for the random number generator
+
+```
+python main.py --seed 604687812976484676
+```
+
 ## Formatting
 
 ```
