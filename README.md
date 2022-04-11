@@ -6,6 +6,32 @@ _"They can make out more than a dozen other islands and black lava ruins that Da
 
 ![Screen recording](example.gif)
 
+## Environment
+
+Create virtual environment
+
+```
+virtualenv sinombre-venv
+```
+
+Activate
+
+```
+source venv/bin/activate
+```
+
+Deactivate
+
+```
+deactivate
+```
+
+## Installing Dependencies
+
+```
+pip install -r requirements.txt
+```
+
 ## Running The Simulator
 
 ```
@@ -15,5 +41,5 @@ python main.py
 ## Formatting
 
 ```
-conda run black .
+black .
 ```
