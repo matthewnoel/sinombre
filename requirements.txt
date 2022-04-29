@@ -9,6 +9,7 @@ docutils==0.17.1
 HTMLParser==0.0.2
 importlib_metadata==4.8.1
 ipaddr==2.2.0
+keyboard==0.13.5
 keyring==23.1.0
 lockfile==0.12.2
 lxml==4.6.3

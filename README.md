@@ -17,7 +17,7 @@ virtualenv sinombre-venv
 Activate
 
 ```
-source venv/bin/activate
+source sinombre-venv/bin/activate
 ```
 
 Deactivate
@@ -35,7 +35,7 @@ pip install -r requirements.txt
 ## Running The Simulator
 
 ```
-python main.py
+sudo python main.py
 ```
 
 Arguments
