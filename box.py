@@ -1,26 +1,14 @@
 class Box:
     def __init__(self):
         self.dict = {}
-        self.legend = {"[q]": "Quit", "[space]": "Play/Pause"}
+        self.controls = {"q": "Quit", "space": "Play/Pause", "n": "Next step"}
 
     def __repr__(self):
         retval = ""
         max = 0
-
-        for key in self.dict:
-            total = len(key) + len(str(self.dict[key]))
-            if total > max:
-                max = total
-        for key in self.legend:
-            total = len(key) + len(str(self.legend[key]))
-            if total > max:
-                max = total
-
-        retval += self.getRowStr(max + 3)
         retval += "\n"
-        retval += self.getDictStr(self.legend, max)
-        retval += self.getDictStr(self.dict, max)
-        retval += self.getRowStr(max + 3)
+        retval += self.getDictStr(self.dict, lambda key: "|" + key)
+        retval += self.getDictStr(self.controls, lambda key: "[" + key + "]")
 
         return retval
 
@@ -31,16 +19,32 @@ class Box:
         retval = ""
         for i in range(0, size):
             retval += "-"
+        retval += "\n"
         return retval
 
-    def getDictStr(self, dict, max):
-        retval = ""
+    def getMaxEntryLength(self, dict):
+        max = 0
         for key in dict:
-            retval += "|"
-            retval += key
+            total = len(key) + len(str(dict[key]))
+            if total > max:
+                max = total
+        return max
+
+    def getDictStr(self, dict, key_transform):
+        max = self.getMaxEntryLength(dict)
+        retval = ""
+        rows = ""
+        transform_offset = 0
+        for key in dict:
+            transformed_key = key_transform(key)
+            transform_offset = len(transformed_key) - len(key)
+            rows += transformed_key
             for i in range(0, max + 1 - len(key) - len(str(dict[key]))):
-                retval += " "
-            retval += str(dict[key])
-            retval += "|"
-            retval += "\n"
+                rows += " "
+            rows += str(dict[key])
+            rows += "|"
+            rows += "\n"
+        retval += self.getRowStr(max + 2 + transform_offset)
+        retval += rows
+        retval += self.getRowStr(max + 2 + transform_offset)
         return retval

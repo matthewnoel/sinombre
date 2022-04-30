@@ -104,7 +104,10 @@ class Organism(Positional):
             if (
                 random.randrange(
                     0,
-                    max(2, int((1 - self.health / self.initial_health) * self.health),),
+                    max(
+                        2,
+                        int((1 - self.health / self.initial_health) * self.health),
+                    ),
                 )
                 == 0
             ):
@@ -135,7 +138,11 @@ class Organism(Positional):
                     )
                 if (
                     positional.preferred_mate is not None
-                    and positional.preferred_mate == (self.x, self.y,)
+                    and positional.preferred_mate
+                    == (
+                        self.x,
+                        self.y,
+                    )
                 ):
                     self._birthChild(positional.genome)
 

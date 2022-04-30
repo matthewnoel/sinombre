@@ -8,6 +8,7 @@ from positional import Positional
 
 class World:
     def __init__(self, size, life_odds=10, food_odds=20, oasis_odds=50):
+        self.iteration = 0
         self.size = size
         self.position_relations = {}
         for x in range(size):
@@ -43,6 +44,8 @@ class World:
             if type(position_relations[position]).__name__ == "Organism":
                 retval = True
             position_relations[position].onTimeIncremented()
+        if retval:
+            self.iteration += 1
         return retval
 
     def spawnOrganism(self, x, y, genome=None):

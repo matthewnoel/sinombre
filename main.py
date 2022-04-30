@@ -9,7 +9,7 @@ from world import World
 
 MAX_ITERATION_COUNT = 500
 SLEEP_SECONDS = 0.1
-WORLD_LENGTH = 75
+WORLD_LENGTH = 65
 seed = random.randrange(0, sys.maxsize)
 world = World(WORLD_LENGTH)
 box = Box()
@@ -28,8 +28,10 @@ def onPress(event):
     elif event.name == "space":
         is_paused = not is_paused
         box.set("Simulating", not is_paused)
-    else:
-        box.set(event.name, "Pressed")
+    elif event.name == "n" and is_paused:
+        world.incrementTime()
+        box.set("Time", world.iteration)
+        render()
 
 
 def render():
@@ -43,8 +45,8 @@ def main():
     box.set("Simulating", True)
     box.set("Seed", seed)
     render()
-    i = 0
-    while i < MAX_ITERATION_COUNT:
+
+    while world.iteration < MAX_ITERATION_COUNT:
         if wants_quit:
             box.set("Outcome", "User quit")
             break
@@ -52,14 +54,14 @@ def main():
             continue
         time.sleep(SLEEP_SECONDS)
         is_incrementable = world.incrementTime()
-        box.set("Time", i)
+        box.set("Time", world.iteration)
         render()
         if not is_incrementable:
             box.set("Outcome", "Died out")
             break
-        i += 1
-    if i == MAX_ITERATION_COUNT - 1:
+    if world.iteration == MAX_ITERATION_COUNT - 1:
         box.set("Outcome", "Max interations hit")
+    box.set("Simulating", False)
     render()
     return 0
 
